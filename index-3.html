@@ -292,65 +292,113 @@
             color: var(--accent);
         }
 
-        /* ---------- AI对话助手区域 (豆包SDK容器) ---------- */
+      /* ---------- AI对话助手区域 (豆包SDK预留) ---------- */
         .chat-sdk-container {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 2rem 2rem 1.8rem;
+            border-radius: 28px;
+            padding: 1.8rem;
             border: 1px solid var(--border-light);
             box-shadow: var(--shadow);
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
         }
         .chat-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 1.8rem;
+            gap: 8px;
+            margin-bottom: 1.5rem;
         }
         .chat-header i {
             color: var(--accent);
-            font-size: 2.2rem;
+            font-size: 2rem;
         }
         .chat-header h3 {
             color: var(--heading-color);
             font-weight: 600;
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
         .chat-header span {
             background: var(--tag-bg);
             color: var(--tag-text);
-            padding: 0.3rem 1.2rem;
+            padding: 0.2rem 1rem;
             border-radius: 40px;
-            font-size: 0.9rem;
-            margin-left: 0.8rem;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
         }
 
-        /* 豆包SDK挂载容器 — 完全空白，只供SDK渲染 */
-        #coze-chat-container {
-            min-height: 450px;
-            width: 100%;
-            border-radius: 32px;
-            background: transparent;
-            margin-bottom: 1rem;
-            /* SDK会注入内容，我们不设置背景，让它继承卡片背景 */
-        }
-
-        .sdk-tip {
-            background: var(--tag-bg);
+        /* 模拟的静态聊天界面 (占位，用户会替换为豆包SDK) */
+        .chat-mock {
+            border: 2px dashed var(--accent);
             border-radius: 24px;
-            padding: 1rem 1.5rem;
-            color: var(--tag-text);
-            border: 1px dashed var(--accent);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-        .sdk-tip code {
+            padding: 1.2rem;
             background: var(--surface);
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        .mock-msgs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 1rem;
+            max-height: 240px;
+            overflow-y: auto;
+            padding: 0.2rem;
+        }
+        .msg {
+            padding: 0.7rem 1.2rem;
+            border-radius: 18px;
+            max-width: 80%;
+            word-break: break-word;
+        }
+        .msg.mock-user {
+            align-self: flex-end;
+            background: var(--chat-user-bg);
+            color: var(--text-primary);
+            border-bottom-right-radius: 4px;
+        }
+        .msg.mock-ai {
+            align-self: flex-start;
+            background: var(--chat-ai-bg);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+        }
+        .mock-input {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--chat-border);
+            border-radius: 40px;
+            padding: 0.4rem 0.4rem 0.4rem 1.2rem;
+        }
+        .mock-input input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .mock-input button {
+            background: var(--accent);
+            border: none;
+            color: var(--surface);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
             font-weight: 600;
+            cursor: default;
+            opacity: 0.8;
+        }
+        .sdk-placeholder-note {
+            font-size: 0.9rem;
+            background: var(--tag-bg);
+            padding: 1rem;
+            border-radius: 16px;
+            color: var(--tag-text);
+            border: 1px solid var(--border-light);
+        }
+        .sdk-placeholder-note code {
+            background: var(--surface);
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            color: var(--accent);
         }
 
         /* 移动端优化 */
