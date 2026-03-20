@@ -1,37 +1,663 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 1</title>
+    <title>数字简历工坊 · 网页模板 + AI智能体</title>
+    <!-- Font Awesome 6 (免费图标) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
+
+        /* 两套主题变量 — 白天 & 夜晚（荧光黄）完全沿用第一版 */
+        body.theme-light {
+            --bg-body: #f4f7fb;
+            --bg-card: #ffffff;
+            --text-primary: #1e2a3a;
+            --text-secondary: #2c3e50;
+            --border-light: #dce5f0;
+            --accent-soft: #3b82f6;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+            --btn-bg: #eef2f6;
+            --btn-border: #cbd5e1;
+            --btn-hover: #e2e8f0;
+            --message-left: #e9eef4;
+            --message-right: #d1d9e6;
+            --icon-color: #2563eb;
+            --footer-text: #4b5563;
+            --chart-bar: #3b82f6;
+            --price-badge-bg: #e6f0ff;
+        }
+
+        body.theme-dark {
+            --bg-body: #0d1117;           /* 深色底 */
+            --bg-card: #161c24;           /* 卡片稍亮 */
+            --text-primary: #ffff66;       /* 荧光黄主字体 */
+            --text-secondary: #ffffb0;      /* 柔和荧光黄辅助 */
+            --border-light: #2d3748;
+            --accent-soft: #facc15;        /* 金 */
+            --shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
+            --btn-bg: #1f2a3f;
+            --btn-border: #3e4c5d;
+            --btn-hover: #2b3b55;
+            --message-left: #1e2a3a;
+            --message-right: #2a384b;
+            --icon-color: #ffe066;
+            --footer-text: #c0c5cc;
+            --chart-bar: #ffe066;
+            --price-badge-bg: #2a384b;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            width: 100%;
+        }
+
+        /* 头部 (和第一版相同) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+            color: var(--icon-color);
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-soft) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.1rem;
+        }
+
+        /* 一键切换按钮 */
+        .theme-toggle-btn {
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            color: var(--text-primary);
+            padding: 0.7rem 1.6rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(4px);
+            transition: all 0.2s;
+        }
+
+        .theme-toggle-btn i {
+            font-size: 1.2rem;
+            color: var(--icon-color);
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--btn-hover);
+            transform: scale(1.02);
+            border-color: var(--accent-soft);
+        }
+
+        /* 引言区 */
+        .hero {
+            text-align: center;
+            margin: 2.5rem 0 3.5rem;
+        }
+
+        .hero h2 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero .highlight {
+            color: var(--accent-soft);
+            border-bottom: 3px dashed var(--accent-soft);
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        /* 三个核心卡片 (第一版的三块内容) */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 2rem 1.8rem;
+            border-radius: 32px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(2px);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card-icon {
+            font-size: 2.8rem;
+            color: var(--icon-color);
+            margin-bottom: 1.4rem;
+        }
+
+        .card h3 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .card p, .card li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card ul {
+            list-style-type: none;
+            margin-top: 1rem;
+        }
+
+        .card li {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card li i {
+            color: var(--icon-color);
+            font-size: 1.1rem;
+            width: 1.5rem;
+        }
+
+        /* 小型图表 (装饰第二卡片，可选) */
+        .mini-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            margin: 1rem 0 1.2rem;
+            height: 60px;
+        }
+        .mini-chart .bar {
+            width: 18px;
+            background: var(--chart-bar);
+            border-radius: 8px 8px 4px 4px;
+            opacity: 0.7;
+        }
+        .mini-chart .bar:nth-child(1) { height: 28px; }
+        .mini-chart .bar:nth-child(2) { height: 46px; }
+        .mini-chart .bar:nth-child(3) { height: 62px; }
+        .mini-chart .bar:nth-child(4) { height: 34px; }
+        .mini-chart .bar:nth-child(5) { height: 55px; }
+
+        /* AI模拟对话区 (来自第一版) */
+        .ai-demo-section {
+            background: var(--bg-card);
+            border-radius: 2.5rem;
+            padding: 2.5rem 2rem;
+            margin: 3rem 0 2rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
+        }
+
+        .ai-demo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.8rem;
+            font-weight: 650;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .ai-demo-title i {
+            color: var(--icon-color);
+            background: var(--btn-bg);
+            padding: 0.7rem;
+            border-radius: 50%;
+        }
+
+        .chat-simulation {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-width: 650px;
+            margin: 2rem auto 0.5rem;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            max-width: 85%;
+        }
+
+        .message.left {
+            align-self: flex-start;
+        }
+
+        .message.right {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            background: var(--btn-bg);
+            border-radius: 40px;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--icon-color);
+            border: 1px solid var(--border-light);
+        }
+
+        .bubble {
+            background: var(--message-left);
+            padding: 0.9rem 1.5rem;
+            border-radius: 24px 24px 24px 8px;
+            color: var(--text-primary);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .message.right .bubble {
+            background: var(--message-right);
+            border-radius: 24px 24px 8px 24px;
+        }
+
+        .bubble i {
+            margin-right: 6px;
+            color: var(--icon-color);
+        }
+
+        .input-demo {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            background: var(--btn-bg);
+            border-radius: 60px;
+            border: 1px solid var(--border-light);
+            padding: 0.5rem 1rem 0.5rem 1.8rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .input-demo span {
+            color: var(--text-secondary);
+            opacity: 0.8;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .input-demo i {
+            background: var(--bg-card);
+            padding: 0.7rem;
+            border-radius: 50%;
+            color: var(--icon-color);
+            border: 1px solid var(--border-light);
+        }
+
+        /* ========== 新增价格卡片 (来自最后一版) ========= */
+        .pricing-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 3rem 0 2rem;
+        }
+
+        .price-card {
+            background: var(--bg-card);
+            border-radius: 2.5rem;
+            padding: 2rem 2rem 2.2rem;
+            flex: 1 1 260px;
+            max-width: 340px;
+            border: 2px solid var(--accent-soft);
+            box-shadow: var(--shadow);
             text-align: center;
         }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+
+        .price-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
         }
-        p {
-            font-size: 1.2rem;
-            opacity: 0.8;
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-soft);
+            margin: 0.5rem 0;
+        }
+        .price-tag small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .price-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin: 1rem 0 1.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .price-badge {
+            background: var(--price-badge-bg);
+            border: 1px dashed var(--accent-soft);
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .price-note {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+        .price-note i {
+            color: var(--icon-color);
+        }
+
+        /* 联系方式区块 */
+        .contact-block {
+            background: var(--bg-card);
+            border-radius: 3rem;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 3rem;
+            border: 2px solid var(--border-light);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .wechat-icon {
+            font-size: 3rem;
+            color: #2baf2b;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+        }
+
+        .contact-text {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--btn-bg);
+            padding: 0.6rem 2rem;
+            border-radius: 60px;
+            border: 1px solid var(--border-light);
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+
+        .contact-text i {
+            color: var(--accent-soft);
+            margin-right: 8px;
+        }
+
+        .contact-remark {
+            background: var(--price-badge-bg);
+            border-radius: 60px;
+            padding: 0.5rem 1.5rem;
+            color: var(--text-secondary);
+            border: 1px dashed var(--accent-soft);
+            font-size: 1rem;
+        }
+
+        /* 页脚 (沿用) */
+        .footer-note {
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--footer-text);
+            border-top: 1px solid var(--border-light);
+            padding-top: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-note i {
+            color: var(--icon-color);
+            margin: 0 4px;
+        }
+
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; align-items: flex-start; }
+            .hero h2 { font-size: 2rem; }
+            .container { padding: 1rem 1.2rem; }
+            .contact-text { font-size: 1.4rem; }
         }
     </style>
 </head>
-<body>
+<body class="theme-light">
     <div class="container">
-        <h1>Page 1</h1>
-        <p>内容待上传...</p>
+        <!-- 头部 (第一版) -->
+        <div class="navbar">
+            <div class="logo-area">
+                <i class="fas fa-file-code logo-icon"></i>
+                <div class="logo-text">
+                    <h1>数字简历工坊</h1>
+                    <p>模板·AI智能体·双主题</p>
+                </div>
+            </div>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <i class="fas fa-sun"></i> 切换到深色模式
+            </button>
+        </div>
+
+        <!-- 英雄区 (第一版文案) -->
+        <div class="hero">
+            <h2>
+                用网页制作简历 <br>
+                <span class="highlight">+ AI 交互智能体</span>
+            </h2>
+            <p>让简历从「静态文档」进化为「会对话的作品」。适配AI时代求职热点，一眼突出。</p>
+        </div>
+
+        <!-- 三个核心卡片 (完全复用第一版内容) -->
+        <div class="features-grid">
+            <!-- 卡片 1: 怎么用网页制作简历 -->
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3>1. 网页简历制作</h3>
+                <p>用 HTML/CSS 雕琢你的职业故事，三步走：</p>
+                <ul>
+                    <li><i class="fas fa-pencil-ruler"></i> 结构：语义化标签，清晰分区</li>
+                    <li><i class="fas fa-paint-brush"></i> 样式：Flex/Grid 构建视觉</li>
+                    <li><i class="fas fa-upload"></i> 发布：GitHub Pages / Vercel 一键部署</li>
+                </ul>
+                <p style="margin-top: 1rem; font-style: italic;">你也可以使用在线编辑器和模板，但亲手写的更显极客本色。</p>
+            </div>
+
+            <!-- 卡片 2: 网页简历fancy之处 (加了迷你柱状图装饰) -->
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-magic"></i></div>
+                <h3>2. Fancy 亮点</h3>
+                <div class="mini-chart">
+                    <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                </div>
+                <ul>
+                    <li><i class="fas fa-film"></i> 交互动画 & 微交互</li>
+                    <li><i class="fas fa-chart-line"></i> 嵌入式数据图表 / 技能图谱</li>
+                    <li><i class="fas fa-cube"></i> 作品集视频、3D元素（Three.js）</li>
+                    <li><i class="fas fa-link"></i> 自定义域名 & 暗色/亮色主题</li>
+                </ul>
+                <p style="margin-top: 1rem;">让招聘官眼前一亮——你的简历本身就是一份作品。</p>
+            </div>
+
+            <!-- 卡片 3: AI交互智能体 -->
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-robot"></i></div>
+                <h3>3. AI 智能体</h3>
+                <ul>
+                    <li><i class="fas fa-comment-dots"></i> 7x24h 对话式面试预热</li>
+                    <li><i class="fas fa-brain"></i> 根据岗位定制问答知识库</li>
+                    <li><i class="fas fa-message"></i> 访客可与「AI 你」聊项目经历</li>
+                    <li><i class="fas fa-plug"></i> 集成扣子(Coze) / 私有大模型API</li>
+                </ul>
+                <p style="margin-top: 1rem;">不再是单向阅读，而是双向互动，印象分拉满。</p>
+            </div>
+        </div>
+
+        <!-- AI 模拟对话 (沿用第一版) -->
+        <div class="ai-demo-section">
+            <div class="ai-demo-title">
+                <i class="fas fa-comment-dots"></i> 
+                <span>AI 简历助手 · 即时对话模拟</span>
+            </div>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">在你的简历页脚嵌入类似这样的智能体，访客可以直接提问——</p>
+            
+            <div class="chat-simulation">
+                <div class="message left">
+                    <div class="avatar"><i class="fas fa-robot"></i></div>
+                    <div class="bubble"><i class="fas fa-hand-wave"></i> 你好！我是林小明的AI助手，想了解他的前端作品集吗？</div>
+                </div>
+                <div class="message right">
+                    <div class="avatar"><i class="fas fa-user"></i></div>
+                    <div class="bubble">他用过哪些动画库？有Three.js案例吗？</div>
+                </div>
+                <div class="message left">
+                    <div class="avatar"><i class="fas fa-robot"></i></div>
+                    <div class="bubble"><i class="fas fa-cubes"></i> 当然！他做过三个全屏粒子动画，还集成了Lottie。要看看作品链接吗？</div>
+                </div>
+            </div>
+
+            <div class="input-demo">
+                <span>📝 问我关于技术栈、工作年限...</span>
+                <i class="fas fa-paper-plane"></i>
+            </div>
+            <p style="text-align: center; margin-top: 1.4rem; color: var(--text-secondary); font-size: 0.95rem;">
+                ⚡ 完全自定义知识库 · 让简历“能说会道”
+            </p>
+        </div>
+
+        <!-- ========== 产品价格 (新增) ========= -->
+        <div class="pricing-row">
+            <!-- 套餐一：模板简历 299元/套 -->
+            <div class="price-card">
+                <h3>📄 模板简历</h3>
+                <div class="price-tag">¥299 <small>/套</small></div>
+                <p class="price-desc">可以一键切换深浅两种风格<br>（白天浅色+深色字体 / 夜晚深色+荧光黄）</p>
+                <div class="price-badge">纯视觉模板 · 无AI</div>
+                <div class="price-note"><i class="fas fa-check-circle" style="color:#2baf2b;"></i> 包含完整HTML/CSS/JS</div>
+            </div>
+            <!-- 套餐二：模板简历+扣子互动智能体 599元/套 -->
+            <div class="price-card" style="border-color: var(--accent-soft); border-width: 3px;">
+                <h3>🤖 模板 + 智能体</h3>
+                <div class="price-tag">¥599 <small>/套</small></div>
+                <p class="price-desc">两种风格 + 扣子(Coze)互动智能机器人<br>让简历会对话，适配AI时代求职</p>
+                <div class="price-badge">含AI知识库搭建指导</div>
+                <div class="price-note"><i class="fas fa-star" style="color: #facc15;"></i> 赠送智能体配置文档</div>
+            </div>
+        </div>
+
+        <!-- 联系方式 (wx) -->
+        <div class="contact-block">
+            <i class="fab fa-weixin wechat-icon"></i>
+            <span class="contact-text"><i class="fas fa-hashtag"></i> momo91115616</span>
+            <span class="contact-remark">备注「数字简历制作」优先通过</span>
+        </div>
+
+        <!-- 页脚 (第一版的轻松风格) -->
+        <div class="footer-note">
+            <i class="fas fa-heart"></i> 用 vibe coding 精神打造 · 白天浅底 & 夜晚荧光黄 <i class="fas fa-meteor"></i><br>
+            点击顶部按钮一键切换主题，感受视觉反差。
+        </div>
     </div>
+
+    <!-- 一键切换脚本 (与第一版一致) -->
+    <script>
+        (function() {
+            const body = document.body;
+            const toggleBtn = document.getElementById('themeToggleBtn');
+
+            function updateButtonText() {
+                if (body.classList.contains('theme-light')) {
+                    toggleBtn.innerHTML = '<i class="fas fa-sun"></i> 切换到深色模式';
+                } else {
+                    toggleBtn.innerHTML = '<i class="fas fa-moon"></i> 切换到白天模式';
+                }
+            }
+
+            toggleBtn.addEventListener('click', function() {
+                if (body.classList.contains('theme-light')) {
+                    body.classList.remove('theme-light');
+                    body.classList.add('theme-dark');
+                } else {
+                    body.classList.remove('theme-dark');
+                    body.classList.add('theme-light');
+                }
+                updateButtonText();
+            });
+
+            updateButtonText();
+        })();
+    </script>
 </body>
 </html>
