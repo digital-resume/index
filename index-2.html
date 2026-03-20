@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>产品经理面试 · 治愈系双模站（豆包SDK嵌入）</title>
-    <!-- Font Awesome 6 (免费图标库) -->
+    <title>产品经理面试 · 双模商务模板</title>
+    <!-- Font Awesome 6 图标库 (免费) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- 圆润字体：Quicksand + 辅助 fallback -->
+    <!-- 商务科技字体 Inter 干净现代 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
         }
 
         body {
-            font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             line-height: 1.5;
             transition: background-color 0.2s ease, color 0.2s ease;
             min-height: 100vh;
@@ -27,57 +27,63 @@
             align-items: center;
         }
 
-        /* ----- 白天治愈系阳光主题 (浅色底+深色字体) ----- */
+        /* ----- 浅色模式 (默认) 变量：商务浅底深字 ----- */
         :root {
-            --bg-gradient: linear-gradient(145deg, #fff9e6 0%, #fef4d9 100%);
-            --surface: rgba(255, 248, 235, 0.7);
-            --card-bg: #ffffffd6;
-            --text-primary: #2d3e4f;
-            --text-secondary: #4a5f73;
-            --heading-color: #1b4b5e;
-            --accent: #f9a26c;          /* 暖橘色 */
-            --accent-soft: #ffe2d0;
-            --border-light: #fadab9;
-            --shadow: 0 20px 35px rgba(249, 162, 108, 0.15);
-            --tag-bg: #ffefd5;
-            --tag-text: #9b6b4b;
-            --btn-mode-bg: #ffffffcc;
-            --btn-mode-border: #f9c49a;
-            --btn-mode-color: #8b5e3c;
+            --bg-gradient: linear-gradient(145deg, #f5f9ff 0%, #ecf2fa 100%);
+            --surface: #ffffff;
+            --card-bg: #ffffff;
+            --text-primary: #1a2b3e;
+            --text-secondary: #2c405c;
+            --heading-color: #0a3147;
+            --accent: #0066b3;          /* 科技蓝 */
+            --accent-soft: #d9ebff;
+            --border-light: #cdddec;
+            --shadow: 0 12px 28px rgba(0, 40, 70, 0.1);
+            --tag-bg: #e3efff;
+            --tag-text: #004c8c;
+            --chat-user-bg: #cce5ff;
+            --chat-ai-bg: #eef3f9;
+            --chat-border: #b8cfec;
+            --btn-mode-bg: #ffffff;
+            --btn-mode-border: #b5cde0;
+            --btn-mode-color: #1a3855;
         }
 
-        /* ----- 夜晚深色荧光主题 (深底+荧光字) ----- */
+        /* ----- 深色/荧光黄模式 ----- */
         body.dark-mode {
-            --bg-gradient: linear-gradient(145deg, #0f172a 0%, #1a1f35 100%);
-            --surface: #1e2740b3;
-            --card-bg: #232e4ad9;
-            --text-primary: #f0eefb;
-            --text-secondary: #cbd5e1;
-            --heading-color: #b3ff9e;      /* 荧光绿 */
-            --accent: #aeff7e;               /* 荧光绿强调 */
-            --accent-soft: #3f4d7a;
-            --border-light: #5b6a9b;
-            --shadow: 0 25px 40px rgba(0, 255, 200, 0.2);
-            --tag-bg: #2f3b66;
-            --tag-text: #d6ffbc;
-            --btn-mode-bg: #2a3456;
-            --btn-mode-border: #aeff7e;
-            --btn-mode-color: #e3ffcf;
+            --bg-gradient: #0b1015;              /* 纯深色背景 */
+            --surface: #1a2632;
+            --card-bg: #1f2e3d;
+            --text-primary: #e0eaf5;
+            --text-secondary: #c0d0e0;
+            --heading-color: #ffff99;              /* 荧光黄主色 */
+            --accent: #ffe566;                      /* 荧光黄用于强调 */
+            --accent-soft: #3f5568;
+            --border-light: #3f5568;
+            --shadow: 0 20px 30px rgba(0, 0, 0, 0.8);
+            --tag-bg: #2c4057;
+            --tag-text: #ffffbb;
+            --chat-user-bg: #2f4a68;
+            --chat-ai-bg: #26384f;
+            --chat-border: #5f7d9c;
+            --btn-mode-bg: #1f2f40;
+            --btn-mode-border: #ffffaa;
+            --btn-mode-color: #ffffbb;
         }
 
         body {
             background: var(--bg-gradient);
             color: var(--text-primary);
-            backdrop-filter: blur(2px);
         }
 
+        /* 整体容器 */
         .site-wrapper {
             max-width: 1200px;
             width: 100%;
             padding: 1.2rem 1.5rem 2rem;
         }
 
-        /* 顶部栏：双模切换 + 治愈小标识 */
+        /* 顶部栏：双模切换 */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -88,15 +94,13 @@
         }
         .logo-area {
             font-weight: 600;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             background: var(--surface);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1.4rem;
-            border-radius: 60px;
+            padding: 0.45rem 1.2rem;
+            border-radius: 50px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-light);
             color: var(--heading-color);
-            letter-spacing: 0.3px;
         }
         .mode-switch {
             display: flex;
@@ -104,40 +108,39 @@
         }
         .mode-btn {
             background: var(--btn-mode-bg);
-            backdrop-filter: blur(4px);
-            border: 1.8px solid var(--btn-mode-border);
+            border: 1.5px solid var(--btn-mode-border);
             color: var(--btn-mode-color);
-            padding: 0.6rem 1.8rem;
-            border-radius: 50px;
+            padding: 0.6rem 1.6rem;
+            border-radius: 40px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.15s;
             box-shadow: var(--shadow);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .mode-btn i {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         .mode-btn.active {
             background: var(--accent);
             border-color: var(--accent);
-            color: #2d3e4f;
+            color: var(--btn-mode-bg);
         }
+        /* 深色模式时，active按钮文字深色保证对比 */
         body.dark-mode .mode-btn.active {
-            color: #0f172a;
-            background: #aeff7e;
-            border-color: #aeff7e;
+            color: #0b1015;
+            background: #ffff88;
+            border-color: #ffff88;
         }
 
-        /* 个人资料卡 (治愈圆角大卡片) */
+        /* 个人资料卡片 */
         .profile-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            padding: 2rem 2.5rem;
+            border-radius: 32px;
+            padding: 2rem 2.2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-light);
@@ -147,99 +150,94 @@
             gap: 2rem;
         }
         .avatar-icon {
-            font-size: 4.5rem;
+            font-size: 4.2rem;
             color: var(--accent);
             background: var(--accent-soft);
-            width: 110px;
-            height: 110px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid var(--accent);
-            box-shadow: 0 10px 20px rgba(249,162,108,0.3);
+            border: 2px solid var(--accent);
         }
         .profile-info h1 {
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             font-weight: 700;
             color: var(--heading-color);
             letter-spacing: -0.5px;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
         .profile-info .title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
-            margin-bottom: 0.6rem;
-            font-weight: 500;
+            margin-bottom: 0.4rem;
         }
         .profile-info .meta {
             display: flex;
-            gap: 1.8rem;
+            gap: 1.5rem;
             flex-wrap: wrap;
             color: var(--text-secondary);
-            font-weight: 400;
+            font-weight: 300;
         }
         .meta i {
             color: var(--accent);
-            margin-right: 0.4rem;
+            margin-right: 0.3rem;
         }
 
         /* 通用卡片 */
         .section-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 40px;
-            padding: 2rem 2.2rem;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-light);
         }
         .section-title {
-            font-size: 1.9rem;
+            font-size: 1.7rem;
             font-weight: 600;
             color: var(--heading-color);
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.7rem;
         }
         .section-title i {
             color: var(--accent);
-            font-size: 2rem;
+            font-size: 1.7rem;
         }
 
-        /* 工作简历网格 */
+        /* 工作简历 */
         .resume-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
         }
         .resume-item {
+            border-left: 5px solid var(--accent);
             background: var(--surface);
-            backdrop-filter: blur(6px);
-            padding: 1.5rem 1.8rem;
-            border-radius: 28px;
-            border-left: 8px solid var(--accent);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.03);
-            transition: transform 0.2s;
+            padding: 1.2rem 1.2rem 1.2rem 1.5rem;
+            border-radius: 0 18px 18px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
         }
         .resume-item strong {
             color: var(--heading-color);
             font-weight: 700;
             display: block;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         .resume-item .company {
             color: var(--accent);
-            font-weight: 600;
-            margin: 0.5rem 0 0.5rem;
+            font-weight: 500;
+            margin: 0.3rem 0 0.5rem;
         }
         .resume-item .desc {
             color: var(--text-secondary);
             font-size: 0.95rem;
         }
 
-        /* 个人作品卡片 */
+        /* 个人作品 */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -247,18 +245,15 @@
         }
         .portfolio-item {
             background: var(--surface);
-            backdrop-filter: blur(6px);
-            border-radius: 30px;
-            padding: 1.8rem 1.2rem;
+            border-radius: 20px;
+            padding: 1.5rem 1.2rem;
             border: 1px solid var(--border-light);
-            box-shadow: 0 12px 18px rgba(0,0,0,0.03);
-            text-align: center;
-            transition: all 0.2s;
+            box-shadow: 0 6px 10px rgba(0,0,0,0.02);
         }
         .portfolio-item i {
             color: var(--accent);
-            font-size: 2.5rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.7rem;
         }
         .portfolio-item h3 {
             color: var(--heading-color);
@@ -274,25 +269,24 @@
         .skills-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.9rem;
+            gap: 0.8rem;
         }
         .skill-tag {
             background: var(--tag-bg);
             color: var(--tag-text);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
+            padding: 0.7rem 1.4rem;
+            border-radius: 40px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             border: 1px solid var(--border-light);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.02);
-            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
         .skill-tag i {
             margin-right: 6px;
             color: var(--accent);
         }
 
-      /* ---------- AI对话助手区域 (豆包SDK预留) ---------- */
+        /* ---------- AI对话助手区域 (豆包SDK预留) ---------- */
         .chat-sdk-container {
             background: var(--card-bg);
             border-radius: 28px;
@@ -404,41 +398,41 @@
         /* 移动端优化 */
         @media (max-width: 600px) {
             .site-wrapper { padding: 0.8rem 1rem; }
-            .profile-card { flex-direction: column; align-items: flex-start; padding: 1.8rem; }
-            .avatar-icon { width: 80px; height: 80px; font-size: 3rem; }
-            .profile-info h1 { font-size: 2rem; }
-            .section-title { font-size: 1.6rem; }
+            .profile-card { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+            .avatar-icon { width: 70px; height: 70px; font-size: 3rem; }
+            .profile-info h1 { font-size: 1.9rem; }
+            .section-title { font-size: 1.5rem; }
             .resume-grid, .portfolio-grid { grid-template-columns: 1fr; }
             .mode-switch { justify-content: center; width: 100%; }
             .top-bar { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
-<body class=""> <!-- 默认 light-mode (无dark-mode类) -->
+<body class=""> <!-- 默认无dark-mode，即浅色模式 -->
     <div class="site-wrapper">
-        <!-- 顶部：双模切换 (治愈阳光/夜晚荧光) -->
+        <!-- 顶部：双模切换按钮 -->
         <div class="top-bar">
             <div class="logo-area">
-                <i class="fas fa-sun" style="color: var(--accent); margin-right: 8px;"></i>PM·苏萌
+                <i class="fas fa-bolt" style="margin-right: 8px; color: var(--accent);"></i>PM·陈思远
             </div>
             <div class="mode-switch">
-                <button class="mode-btn active" id="lightModeBtn"><i class="fas fa-sun"></i> 白天·治愈</button>
-                <button class="mode-btn" id="darkModeBtn"><i class="fas fa-moon"></i> 夜晚·荧光</button>
+                <button class="mode-btn active" id="lightModeBtn"><i class="fas fa-sun"></i> 日间·商务</button>
+                <button class="mode-btn" id="darkModeBtn"><i class="fas fa-moon"></i> 夜间·荧光</button>
             </div>
         </div>
 
-        <!-- 个人资料卡片 (占位信息，请替换) -->
+        <!-- 个人资料卡片 -->
         <div class="profile-card">
             <div class="avatar-icon">
-                <i class="fas fa-seedling"></i> <!-- 治愈系萌芽图标 -->
+                <i class="fas fa-user-tie"></i>
             </div>
             <div class="profile-info">
-                <h1>苏萌 (Meng Su)</h1>
-                <div class="title">产品治愈师 · 7年用户体验/增长 · 前小红书/字节</div>
+                <h1>陈思远 (Oliver)</h1>
+                <div class="title">高级产品经理 · 8年B2B/B2C · 前SAP/字节</div>
                 <div class="meta">
-                    <span><i class="fas fa-map-pin"></i> 上海 · 即刻到岗</span>
-                    <span><i class="fas fa-envelope"></i> meng.su@pm.me</span>
-                    <span><i class="fas fa-phone-alt"></i> +86 188 0000 2333</span>
+                    <span><i class="fas fa-map-pin"></i> 北京 · 可立即到岗</span>
+                    <span><i class="fas fa-envelope"></i> oliver.chen@pm.me</span>
+                    <span><i class="fas fa-phone-alt"></i> +86 139 **** 5678（展示模板）</span>
                 </div>
             </div>
         </div>
@@ -450,19 +444,19 @@
             </div>
             <div class="resume-grid">
                 <div class="resume-item">
-                    <strong>高级产品经理</strong>
-                    <span class="company">字节跳动 · 生活服务</span>
-                    <div class="desc">2021-至今 · 负责本地生活社区方向，用户时长提升60%</div>
+                    <strong>资深产品经理</strong>
+                    <span class="company">字节跳动 · 飞书效率产品</span>
+                    <div class="desc">2021-至今 · 负责AI助手与文档协同，月活提升90%</div>
                 </div>
                 <div class="resume-item">
                     <strong>产品经理</strong>
-                    <span class="company">小红书 · 增长产品</span>
-                    <div class="desc">2018-2021 · 主导创作者成长体系，活跃博主增加200%</div>
+                    <span class="company">SAP · 分析云</span>
+                    <div class="desc">2018-2021 · 主导数据故事板，服务300+全球客户</div>
                 </div>
                 <div class="resume-item">
                     <strong>产品助理</strong>
-                    <span class="company">网易云音乐 · 社区</span>
-                    <div class="desc">2016-2018 · 参与歌单推荐算法优化，点击率+25%</div>
+                    <span class="company">美团 · 到店事业群</span>
+                    <div class="desc">2016-2018 · 商家后台改版，操作时长降低25%</div>
                 </div>
             </div>
         </div>
@@ -474,24 +468,24 @@
             </div>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
-                    <i class="fas fa-leaf"></i>
-                    <h3>治愈成长花园</h3>
-                    <p>创作者激励体系，结合心理学机制，留存提升35%</p>
+                    <i class="fas fa-robot"></i>
+                    <h3>智能纪要助手</h3>
+                    <p>基于大模型，会议摘要生成准确率91%，已上线飞书</p>
                 </div>
                 <div class="portfolio-item">
-                    <i class="fas fa-music"></i>
-                    <h3>云村治愈电台</h3>
-                    <p>情绪化推荐歌单，用户日均收听时长+22分钟</p>
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>DataStoryteller</h3>
+                    <p>自动数据解读工具，为SAP节省30%分析人力</p>
                 </div>
                 <div class="portfolio-item">
-                    <i class="fas fa-camera-retro"></i>
-                    <h3>生活碎片模板</h3>
-                    <p>小红书发帖模板，使用率占社区发帖40%</p>
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>商家成长中心</h3>
+                    <p>美团商家APP核心模块，满意度提升35%</p>
                 </div>
                 <div class="portfolio-item">
-                    <i class="fas fa-heart"></i>
-                    <h3>暖心反馈助手</h3>
-                    <p>用户负面情绪自动安抚与工单系统，NPS提升12%</p>
+                    <i class="fas fa-cloud"></i>
+                    <h3>API聚合网关</h3>
+                    <p>设计统一API管理平台，降低30%联调成本</p>
                 </div>
             </div>
         </div>
@@ -499,69 +493,72 @@
         <!-- 核心业务能力 -->
         <div class="section-card">
             <div class="section-title">
-                <i class="fas fa-cogs"></i> 核心能力
+                <i class="fas fa-cogs"></i> 核心业务能力
             </div>
             <div class="skills-container">
                 <span class="skill-tag"><i class="fas fa-chart-line"></i> 数据分析</span>
-                <span class="skill-tag"><i class="fas fa-feather-alt"></i> 用户共情</span>
-                <span class="skill-tag"><i class="fas fa-users"></i> 社群运营</span>
-                <span class="skill-tag"><i class="fas fa-magic"></i> 治愈设计</span>
-                <span class="skill-tag"><i class="fas fa-robot"></i> AI产品</span>
+                <span class="skill-tag"><i class="fas fa-file-signature"></i> PRD/MRD</span>
+                <span class="skill-tag"><i class="fas fa-users"></i> 用户调研</span>
+                <span class="skill-tag"><i class="fas fa-tachometer-alt"></i> 敏捷开发</span>
+                <span class="skill-tag"><i class="fas fa-database"></i> SQL/Tableau</span>
+                <span class="skill-tag"><i class="fas fa-robot"></i> AI产品设计</span>
                 <span class="skill-tag"><i class="fas fa-paint-brush"></i> 交互原型</span>
-                <span class="skill-tag"><i class="fas fa-tasks"></i> 敏捷管理</span>
-                <span class="skill-tag"><i class="fas fa-smile"></i> 情感化设计</span>
-                <span class="skill-tag"><i class="fas fa-seedling"></i> 增长实验</span>
+                <span class="skill-tag"><i class="fas fa-balance-scale"></i> 商业建模</span>
+                <span class="skill-tag"><i class="fas fa-code-branch"></i> 技术沟通</span>
+                <span class="skill-tag"><i class="fas fa-chart-gantt"></i> 路线图规划</span>
             </div>
         </div>
+
 <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
 <script>
   new CozeWebSDK.WebChatClient({
     config: {
-      bot_id: '7619173146226114596',
+      bot_id: '7619166723576971270',
     },
     componentProps: {
       title: 'Coze',
     },
     auth: {
       type: 'token',
-      token: 'pat_lTH7zIVUrtOBBurbr8cBDakNyN3GlO1LQNXlZwWrxxDBaISP1ocr6WGzxI5tyMdd',
+      token: 'pat_5TfKYqy3hYSg6IA8CcpszAcnvhyaQVprgLUCfDEZwV2eCtyh1P6LG5w59KpdobS1',
       onRefreshToken: function () {
-        return 'pat_lTH7zIVUrtOBBurbr8cBDakNyN3GlO1LQNXlZwWrxxDBaISP1ocr6WGzxI5tyMdd'
+        return 'pat_5TfKYqy3hYSg6IA8CcpszAcnvhyaQVprgLUCfDEZwV2eCtyh1P6LG5w59KpdobS1'
       }
     }
   });
 </script>
 
-        <!-- 底部占位替换说明 -->
+        <!-- 底部提示：占位信息可替换 -->
         <div style="text-align: center; padding: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-light); font-size: 0.8rem;">
-            🌱谢谢观看。
+            谢谢观看
         </div>
     </div>
 
-
-
-    <!-- 双模切换脚本 -->
     <script>
         (function() {
+            // 获取body和按钮
             const body = document.body;
             const lightBtn = document.getElementById('lightModeBtn');
             const darkBtn = document.getElementById('darkModeBtn');
 
+            // 浅色模式 (移除dark-mode类)
             function setLightMode() {
                 body.classList.remove('dark-mode');
                 lightBtn.classList.add('active');
                 darkBtn.classList.remove('active');
             }
+            // 深色模式 (添加dark-mode类)
             function setDarkMode() {
                 body.classList.add('dark-mode');
                 darkBtn.classList.add('active');
                 lightBtn.classList.remove('active');
             }
 
+            // 按钮点击事件
             lightBtn.addEventListener('click', setLightMode);
             darkBtn.addEventListener('click', setDarkMode);
 
-            // 初始状态：确保light高亮 (body无dark-mode)
+            // 初始化按钮状态 (如果body默认没有dark-mode，则light高亮)
             if (!body.classList.contains('dark-mode')) {
                 lightBtn.classList.add('active');
                 darkBtn.classList.remove('active');
