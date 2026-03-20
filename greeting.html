@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease, text-shadow 0.5s ease;
+        }
+
+        :root {
+            --bg-color: #f5f5f5;
+            --text-color: #1a1a2e;
+            --button-bg: #1a1a2e;
+            --button-text: #ffffff;
+            --text-shadow: none;
+            --glow-color: transparent;
+        }
+
+        .dark-mode {
+            --bg-color: #0a0a1a;
+            --text-color: #00ff88;
+            --button-bg: #00ff88;
+            --button-text: #0a0a1a;
+            --text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 40px #00ff88;
+            --glow-color: #00ff88;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .toggle-container {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+        }
+
+        .toggle-btn {
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-mode .toggle-btn {
+            box-shadow: 0 4px 20px var(--glow-color);
+        }
+
+        .dark-mode .toggle-btn:hover {
+            box-shadow: 0 6px 30px var(--glow-color);
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: var(--text-shadow);
+        }
+
+        p {
+            font-size: 1.5rem;
+            opacity: 0.8;
+            text-shadow: var(--text-shadow);
+        }
+
+        .emoji {
+            font-size: 4rem;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+            }
+            p {
+                font-size: 1.2rem;
+            }
+            .toggle-container {
+                top: 20px;
+                right: 20px;
+            }
+            .toggle-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="toggle-container">
+        <button class="toggle-btn" onclick="toggleMode()">
+            <span id="modeText">🌙 晚上好</span>
+        </button>
+    </div>
+
+    <div class="content">
+        <h1>你好，世界！</h1>
+        <p>欢迎来到这个简单的打招呼页面</p>
+        <div class="emoji">👋</div>
+    </div>
+
+    <script>
+        function toggleMode() {
+            const body = document.body;
+            const modeText = document.getElementById('modeText');
+            
+            if (body.classList.contains('dark-mode')) {
+                body.classList.remove('dark-mode');
+                modeText.textContent = '🌙 晚上好';
+            } else {
+                body.classList.add('dark-mode');
+                modeText.textContent = '☀️ 白天好';
+            }
+        }
+    </script>
+</body>
+</html>
