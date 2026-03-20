@@ -508,7 +508,24 @@
                 <span class="skill-tag"><i class="fas fa-chart-gantt"></i> 路线图规划</span>
             </div>
         </div>
-
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+<script>
+  new CozeWebSDK.WebChatClient({
+    config: {
+      bot_id: '7619166723576971270',
+    },
+    componentProps: {
+      title: 'Coze',
+    },
+    auth: {
+      type: 'token',
+      token: 'pat_5TfKYqy3hYSg6IA8CcpszAcnvhyaQVprgLUCfDEZwV2eCtyh1P6LG5w59KpdobS1',
+      onRefreshToken: function () {
+        return 'pat_5TfKYqy3hYSg6IA8CcpszAcnvhyaQVprgLUCfDEZwV2eCtyh1P6LG5w59KpdobS1'
+      }
+    }
+  });
+</script>
         <!-- 底部提示：占位信息可替换 -->
         <div style="text-align: center; padding: 1rem; color: var(--text-secondary); border-top: 1px solid var(--border-light); font-size: 0.8rem;">
             ⚡谢谢观看
