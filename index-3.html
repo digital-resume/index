@@ -474,13 +474,24 @@
                 <span>豆包SDK · 扣子RAG</span>
             </div>
 
-            <!-- 豆包SDK将挂载到此容器。完全空，无干扰UI。 -->
-            <div id="coze-chat-container"></div>
-
-            <!-- 提示及集成说明 (可保留或删除) -->
-            <div class="sdk-tip">
-                <i class="fas fa-code"></i> <strong>豆包SDK已就绪</strong>
-            </div>
+            <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.19/libs/cn/index.js"></script>
+<script>
+  new CozeWebSDK.WebChatClient({
+    config: {
+      bot_id: '7619173146226114596',
+    },
+    componentProps: {
+      title: 'Coze',
+    },
+    auth: {
+      type: 'token',
+      token: 'pat_lTH7zIVUrtOBBurbr8cBDakNyN3GlO1LQNXlZwWrxxDBaISP1ocr6WGzxI5tyMdd',
+      onRefreshToken: function () {
+        return 'pat_lTH7zIVUrtOBBurbr8cBDakNyN3GlO1LQNXlZwWrxxDBaISP1ocr6WGzxI5tyMdd'
+      }
+    }
+  });
+</script>
         </div>
 
         <!-- 底部占位替换说明 -->
