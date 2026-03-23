@@ -1,49 +1,93 @@
 /* ========================================
    Resume-to-Web Template Styles
-   Version: Modern Minimal
+   Version: 2.0 - Dual Theme Support
+   Themes: Business Light / Neon Dark
    ======================================== */
 
-/* CSS Variables */
+/* ===========================================
+   THEME 1: 商务浅色系 (Business Light) - 默认
+   =========================================== */
+
 :root {
+    /* Primary Colors - 蓝色系 */
     --primary-color: #2563eb;
     --primary-dark: #1d4ed8;
     --primary-light: #3b82f6;
+    --primary-bg: #eff6ff;
+    
+    /* Text Colors */
     --text-primary: #1f2937;
     --text-secondary: #4b5563;
     --text-muted: #6b7280;
-    --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
+    
+    /* Background Colors */
+    --bg-page: #f3f4f6;
     --bg-card: #ffffff;
+    --bg-secondary: #f9fafb;
+    
+    /* Border & Shadow */
     --border-color: #e5e7eb;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    
+    /* Accent */
+    --accent-gradient: linear-gradient(135deg, #2563eb, #3b82f6);
+    --accent-glow: none;
+    
+    /* Theme specific */
+    --theme-icon: "☀️";
+    --card-border: none;
+    
+    /* Radius */
     --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
     --radius-lg: 1rem;
-    --transition: all 0.2s ease;
+    
+    /* Transition */
+    --transition: all 0.3s ease;
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary-color: #3b82f6;
-        --primary-dark: #2563eb;
-        --primary-light: #60a5fa;
-        --text-primary: #f9fafb;
-        --text-secondary: #d1d5db;
-        --text-muted: #9ca3af;
-        --bg-primary: #111827;
-        --bg-secondary: #1f2937;
-        --bg-card: #1f2937;
-        --border-color: #374151;
-        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-    }
+/* ===========================================
+   THEME 2: 荧光深色系 (Neon Dark)
+   =========================================== */
+
+[data-theme="neon"] {
+    /* Primary Colors - 霓虹色系 */
+    --primary-color: #00ff88;
+    --primary-dark: #00cc6a;
+    --primary-light: #33ff99;
+    --primary-bg: rgba(0, 255, 136, 0.1);
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    
+    /* Background Colors */
+    --bg-page: #0a0a0f;
+    --bg-card: #18181b;
+    --bg-secondary: #1f1f23;
+    
+    /* Border & Shadow */
+    --border-color: #27272a;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.6);
+    
+    /* Accent - 霓虹发光效果 */
+    --accent-gradient: linear-gradient(135deg, #00ff88, #00ccff);
+    --accent-glow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 40px rgba(0, 255, 136, 0.1);
+    
+    /* Theme specific */
+    --theme-icon: "🌙";
+    --card-border: 1px solid rgba(0, 255, 136, 0.2);
 }
 
-/* Reset & Base */
+/* ===========================================
+   BASE STYLES
+   =========================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -56,26 +100,112 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-page);
     color: var(--text-primary);
     line-height: 1.6;
     font-size: 16px;
+    transition: var(--transition);
 }
 
-/* Container */
+/* ===========================================
+   THEME SWITCHER - 顶部切换按钮
+   =========================================== */
+
+.theme-switcher {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    padding: 0.5rem;
+    border-radius: 50px;
+    box-shadow: var(--shadow-lg);
+    border: var(--card-border);
+}
+
+.theme-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.theme-btn:hover {
+    background: var(--bg-secondary);
+}
+
+.theme-btn.active {
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: var(--accent-glow);
+}
+
+.theme-btn i {
+    font-size: 1rem;
+}
+
+/* 商务风格按钮 */
+.theme-btn[data-theme="business"] i {
+    color: #3b82f6;
+}
+
+.theme-btn[data-theme="business"].active i {
+    color: white;
+}
+
+/* 霓虹风格按钮 */
+[data-theme="neon"] .theme-btn[data-theme="neon"] i {
+    color: #00ff88;
+}
+
+.theme-btn[data-theme="neon"].active i {
+    color: white;
+}
+
+/* ===========================================
+   CONTAINER
+   =========================================== */
+
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 4rem 1.5rem 2rem;
 }
 
 @media (max-width: 640px) {
     .container {
-        padding: 1rem;
+        padding: 5rem 1rem 2rem;
+    }
+    
+    .theme-switcher {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    .theme-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    
+    .theme-btn span {
+        display: none;
     }
 }
 
-/* Header */
+/* ===========================================
+   HEADER
+   =========================================== */
+
 .header {
     text-align: center;
     padding: 3rem 2rem;
@@ -83,18 +213,35 @@ body {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     margin-bottom: 2rem;
+    border: var(--card-border);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 霓虹模式下的头部装饰 */
+[data-theme="neon"] .header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-gradient);
+    box-shadow: 0 0 20px var(--primary-color);
 }
 
 .avatar-placeholder {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    background: var(--accent-gradient);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg), var(--accent-glow);
+    transition: var(--transition);
 }
 
 .avatar-placeholder i {
@@ -108,13 +255,33 @@ body {
     color: var(--text-primary);
     margin-bottom: 0.5rem;
     letter-spacing: -0.025em;
+    transition: var(--transition);
+}
+
+[data-theme="neon"] .name {
+    text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+.name-en {
+    font-size: 0.5em;
+    color: var(--text-secondary);
+    font-weight: 400;
+    margin-left: 0.5rem;
 }
 
 .title {
     font-size: 1.25rem;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     font-weight: 500;
+    transition: var(--transition);
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    transition: var(--transition);
 }
 
 .contact-info {
@@ -135,25 +302,41 @@ body {
     background: var(--bg-secondary);
     border-radius: var(--radius-md);
     transition: var(--transition);
+    border: 1px solid transparent;
 }
 
 .contact-item:hover {
     color: var(--primary-color);
-    background: var(--bg-card);
-    box-shadow: var(--shadow-sm);
+    background: var(--primary-bg);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+[data-theme="neon"] .contact-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
 }
 
 .contact-item i {
     font-size: 1rem;
 }
 
-/* Sections */
+/* ===========================================
+   SECTIONS
+   =========================================== */
+
 .section {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: var(--shadow-sm);
+    border: var(--card-border);
+    transition: var(--transition);
+}
+
+[data-theme="neon"] .section:hover {
+    box-shadow: var(--shadow-md), 0 0 30px rgba(0, 255, 136, 0.05);
 }
 
 .section-title {
@@ -166,21 +349,31 @@ body {
     margin-bottom: 1.25rem;
     padding-bottom: 0.75rem;
     border-bottom: 2px solid var(--border-color);
+    transition: var(--transition);
 }
 
 .section-title i {
     color: var(--primary-color);
     font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+[data-theme="neon"] .section-title i {
+    text-shadow: 0 0 10px currentColor;
 }
 
 .section-content {
     color: var(--text-secondary);
 }
 
-/* Items */
+/* ===========================================
+   ITEMS (Experience, Education, etc.)
+   =========================================== */
+
 .item {
     padding: 1rem 0;
     border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
 }
 
 .item:last-child {
@@ -210,12 +403,14 @@ body {
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 0.25rem;
+    transition: var(--transition);
 }
 
 .item-subtitle {
     font-size: 0.95rem;
     color: var(--text-secondary);
     font-weight: 500;
+    transition: var(--transition);
 }
 
 .item-meta {
@@ -228,6 +423,14 @@ body {
     font-size: 0.85rem;
     color: var(--text-muted);
     white-space: nowrap;
+    padding: 0.25rem 0.75rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+[data-theme="neon"] .item-date {
+    border: 1px solid var(--border-color);
 }
 
 .item-link {
@@ -238,6 +441,7 @@ body {
 
 .item-link:hover {
     color: var(--primary-dark);
+    text-shadow: 0 0 10px currentColor;
 }
 
 .item-description {
@@ -257,20 +461,69 @@ body {
 .item-list li {
     margin-bottom: 0.5rem;
     line-height: 1.6;
+    position: relative;
 }
 
 .item-list li::marker {
     color: var(--primary-color);
 }
 
-/* Summary */
+[data-theme="neon"] .item-list li::marker {
+    text-shadow: 0 0 5px currentColor;
+}
+
+/* 强调文字 */
+.item-list li strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+[data-theme="neon"] .item-list li strong {
+    text-shadow: 0 0 8px currentColor;
+}
+
+/* ===========================================
+   SUMMARY
+   =========================================== */
+
 .summary {
     font-size: 1rem;
     line-height: 1.8;
     color: var(--text-secondary);
 }
 
-/* Skills */
+/* ===========================================
+   SKILLS
+   =========================================== */
+
+.skills-group {
+    margin-bottom: 1.25rem;
+}
+
+.skills-group:last-child {
+    margin-bottom: 0;
+}
+
+.skills-group-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.skills-group-title i {
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+[data-theme="neon"] .skills-group-title i {
+    text-shadow: 0 0 8px currentColor;
+}
+
 .skills-container {
     display: flex;
     flex-wrap: wrap;
@@ -280,17 +533,18 @@ body {
 .skill-tag {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    background: var(--accent-gradient);
     color: white;
     border-radius: var(--radius-md);
     font-size: 0.875rem;
     font-weight: 500;
     transition: var(--transition);
+    border: none;
 }
 
 .skill-tag:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md), var(--accent-glow);
 }
 
 /* Tech Tags */
@@ -310,9 +564,60 @@ body {
     font-size: 0.8rem;
     font-weight: 500;
     border: 1px solid var(--border-color);
+    transition: var(--transition);
 }
 
-/* Languages */
+.tech-tag:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* ===========================================
+   ACHIEVEMENT TABLE
+   =========================================== */
+
+.achievement-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.achievement-table th,
+.achievement-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.achievement-table th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.achievement-table td {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.achievement-table tr:last-child td {
+    border-bottom: none;
+}
+
+.achievement-table tr:hover td {
+    background: var(--bg-secondary);
+}
+
+[data-theme="neon"] .achievement-table tr:hover td {
+    background: rgba(0, 255, 136, 0.05);
+}
+
+/* ===========================================
+   LANGUAGES
+   =========================================== */
+
 .languages-container {
     display: flex;
     flex-wrap: wrap;
@@ -326,6 +631,12 @@ body {
     padding: 0.5rem 1rem;
     background: var(--bg-secondary);
     border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.language-item:hover {
+    border-color: var(--primary-color);
 }
 
 .language-name {
@@ -338,7 +649,10 @@ body {
     font-size: 0.9rem;
 }
 
-/* Footer */
+/* ===========================================
+   FOOTER
+   =========================================== */
+
 .footer {
     text-align: center;
     padding: 2rem 0;
@@ -346,8 +660,47 @@ body {
     font-size: 0.875rem;
 }
 
-/* Print Styles */
+/* ===========================================
+   ANIMATIONS
+   =========================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--primary-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+    }
+}
+
+.section {
+    animation: fadeIn 0.3s ease-out;
+}
+
+[data-theme="neon"] .skill-tag {
+    animation: glow 3s ease-in-out infinite;
+}
+
+/* ===========================================
+   PRINT STYLES
+   =========================================== */
+
 @media print {
+    .theme-switcher {
+        display: none;
+    }
+    
     body {
         background: white;
         font-size: 12pt;
@@ -377,23 +730,10 @@ body {
     }
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
 
-.section {
-    animation: fadeIn 0.3s ease-out;
-}
-
-/* Responsive */
 @media (max-width: 640px) {
     .name {
         font-size: 2rem;
@@ -420,76 +760,9 @@ body {
     .item-meta {
         align-items: flex-start;
     }
-}
-/* Achievement Table Styles */
-.achievement-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 0.5rem;
-}
-
-.achievement-table th,
-.achievement-table td {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.achievement-table th {
-    background: var(--bg-secondary);
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-}
-
-.achievement-table td {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-.achievement-table tr:last-child td {
-    border-bottom: none;
-}
-
-.achievement-table tr:hover td {
-    background: var(--bg-secondary);
-}
-
-/* Skills Group */
-.skills-group {
-    margin-bottom: 1.25rem;
-}
-
-.skills-group:last-child {
-    margin-bottom: 0;
-}
-
-.skills-group-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.skills-group-title i {
-    color: var(--primary-color);
-}
-
-/* Name En */
-.name-en {
-    font-size: 0.5em;
-    color: var(--text-secondary);
-    font-weight: 400;
-    margin-left: 0.5rem;
-}
-
-/* Subtitle */
-.subtitle {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    
+    .achievement-table {
+        display: block;
+        overflow-x: auto;
+    }
 }
