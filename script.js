@@ -1,6 +1,6 @@
 /**
  * Resume-to-Web Interactive Script
- * Version: 3.0 - Four Theme Support
+ * Version: 1.0 - Dual Theme
  */
 
 (function() {
@@ -8,7 +8,6 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         initThemeSwitcher();
-        initSmoothScroll();
         initAnimations();
     });
 
@@ -16,21 +15,13 @@
         const switcher = document.createElement('div');
         switcher.className = 'theme-switcher';
         switcher.innerHTML = `
-            <button class="theme-btn active" data-theme="business" title="商务">
+            <button class="theme-btn active" data-theme="business">
                 <i class="fas fa-briefcase"></i>
                 <span>商务</span>
             </button>
-            <button class="theme-btn" data-theme="neon" title="荧光绿">
+            <button class="theme-btn" data-theme="neon">
                 <i class="fas fa-bolt"></i>
                 <span>荧光</span>
-            </button>
-            <button class="theme-btn" data-theme="warm" title="温暖治愈">
-                <i class="fas fa-heart"></i>
-                <span>治愈</span>
-            </button>
-            <button class="theme-btn" data-theme="yellow" title="荧光黄">
-                <i class="fas fa-sun"></i>
-                <span>暖黄</span>
             </button>
         `;
         
@@ -39,8 +30,7 @@
         const savedTheme = localStorage.getItem('resume-theme') || 'business';
         setTheme(savedTheme);
         
-        const buttons = switcher.querySelectorAll('.theme-btn');
-        buttons.forEach(btn => {
+        switcher.querySelectorAll('.theme-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const theme = this.dataset.theme;
                 setTheme(theme);
@@ -52,30 +42,12 @@
     function setTheme(theme) {
         const root = document.documentElement;
         root.removeAttribute('data-theme');
-        
         if (theme !== 'business') {
             root.setAttribute('data-theme', theme);
         }
         
-        const buttons = document.querySelectorAll('.theme-btn');
-        buttons.forEach(btn => {
-            if (btn.dataset.theme === theme) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-    }
-
-    function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.theme === theme);
         });
     }
 
@@ -90,7 +62,7 @@
                         entry.target.style.transform = 'translateY(0)';
                     }
                 });
-            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            }, { threshold: 0.1 });
 
             sections.forEach(section => {
                 section.style.opacity = '0';
