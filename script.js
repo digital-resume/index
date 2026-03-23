@@ -1,6 +1,6 @@
 /**
  * Resume-to-Web Interactive Script
- * Version: 2.0 - Dual Theme Support
+ * Version: 3.0 - Four Theme Support
  */
 
 (function() {
@@ -16,13 +16,21 @@
         const switcher = document.createElement('div');
         switcher.className = 'theme-switcher';
         switcher.innerHTML = `
-            <button class="theme-btn active" data-theme="business">
+            <button class="theme-btn active" data-theme="business" title="商务">
                 <i class="fas fa-briefcase"></i>
                 <span>商务</span>
             </button>
-            <button class="theme-btn" data-theme="neon">
+            <button class="theme-btn" data-theme="neon" title="荧光绿">
                 <i class="fas fa-bolt"></i>
                 <span>荧光</span>
+            </button>
+            <button class="theme-btn" data-theme="warm" title="温暖治愈">
+                <i class="fas fa-heart"></i>
+                <span>治愈</span>
+            </button>
+            <button class="theme-btn" data-theme="yellow" title="荧光黄">
+                <i class="fas fa-sun"></i>
+                <span>暖黄</span>
             </button>
         `;
         
@@ -45,8 +53,8 @@
         const root = document.documentElement;
         root.removeAttribute('data-theme');
         
-        if (theme === 'neon') {
-            root.setAttribute('data-theme', 'neon');
+        if (theme !== 'business') {
+            root.setAttribute('data-theme', theme);
         }
         
         const buttons = document.querySelectorAll('.theme-btn');
