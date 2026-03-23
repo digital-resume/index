@@ -1,15 +1,63 @@
 /**
  * Resume-to-Web Interactive Script
- * Version: 1.0
+ * Version: 2.0 - Dual Theme Support
  */
 
 (function() {
     'use strict';
 
     document.addEventListener('DOMContentLoaded', function() {
+        initThemeSwitcher();
         initSmoothScroll();
         initAnimations();
     });
+
+    function initThemeSwitcher() {
+        const switcher = document.createElement('div');
+        switcher.className = 'theme-switcher';
+        switcher.innerHTML = `
+            <button class="theme-btn active" data-theme="business">
+                <i class="fas fa-briefcase"></i>
+                <span>商务</span>
+            </button>
+            <button class="theme-btn" data-theme="neon">
+                <i class="fas fa-bolt"></i>
+                <span>荧光</span>
+            </button>
+        `;
+        
+        document.body.insertBefore(switcher, document.body.firstChild);
+        
+        const savedTheme = localStorage.getItem('resume-theme') || 'business';
+        setTheme(savedTheme);
+        
+        const buttons = switcher.querySelectorAll('.theme-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                setTheme(theme);
+                localStorage.setItem('resume-theme', theme);
+            });
+        });
+    }
+
+    function setTheme(theme) {
+        const root = document.documentElement;
+        root.removeAttribute('data-theme');
+        
+        if (theme === 'neon') {
+            root.setAttribute('data-theme', 'neon');
+        }
+        
+        const buttons = document.querySelectorAll('.theme-btn');
+        buttons.forEach(btn => {
+            if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
 
     function initSmoothScroll() {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -17,10 +65,7 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
@@ -37,10 +82,7 @@
                         entry.target.style.transform = 'translateY(0)';
                     }
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
             sections.forEach(section => {
                 section.style.opacity = '0';
@@ -54,7 +96,6 @@
         if (header) {
             header.style.opacity = '0';
             header.style.transform = 'translateY(-20px)';
-            
             setTimeout(() => {
                 header.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 header.style.opacity = '1';
