@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苏萌 - 产品治愈师</title>
+    <style>
+        :root {
+            --main-color: #FF7A59;
+            --text-color: #333;
+            --background-color: #FFFAF0;
+            --secondary-color: #FFC0CB;
+            --card-bg: #fff;
+            --accent: #FF6B6B;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --skill-bg: linear-gradient(135deg, #FF7A59, #FF9A8B);
+            --skill-text: #fff;
+            --border-color: #FFE4E1;
+            --shadow: 0 2px 8px rgba(255, 122, 89, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --main-color: #00FF88;
+            --text-color: #fff;
+            --background-color: #0a0a0f;
+            --secondary-color: #00CCFF;
+            --card-bg: #18181b;
+            --accent: #00FF88;
+            --skill-bg: linear-gradient(135deg, #00FF88, #00CCFF);
+            --skill-text: #0a0a0f;
+            --border-color: rgba(0, 255, 136, 0.3);
+            --shadow: 0 2px 8px rgba(0, 255, 136, 0.2), 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            padding: 20px;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        /* 主题切换按钮 - 明显的button样式 */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--border-color);
+        }
+
+        .theme-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: var(--text-color);
+        }
+
+        .theme-btn:hover {
+            background: var(--secondary-color);
+            color: #fff;
+        }
+
+        .theme-btn.active {
+            background: var(--main-color);
+            color: #fff;
+            box-shadow: 0 0 15px var(--main-color);
+        }
+
+        [data-theme="dark"] .theme-btn.active {
+            box-shadow: 0 0 20px var(--main-color), 0 0 40px rgba(0, 255, 136, 0.3);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--main-color);
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .contact-info {
+            font-size: 0.95em;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info a {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 5px 15px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            background: var(--main-color);
+            color: #fff;
+        }
+
+        section {
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            color: var(--main-color);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--main-color);
+            font-size: 1.1rem;
+            margin: 20px 0 10px;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* 核心业务能力 - 科技感样式 */
+        .skills-container {
+            display: grid;
+            gap: 25px;
+        }
+
+        .skill-category {
+            position: relative;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255,122,89,0.05), rgba(255,192,203,0.1));
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .skill-category {
+            background: linear-gradient(135deg, rgba(0,255,136,0.05), rgba(0,204,255,0.1));
+        }
+
+        .skill-category-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--main-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-category-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--main-color);
+            border-radius: 2px;
+        }
+
+        [data-theme="dark"] .skill-category-title::before {
+            box-shadow: 0 0 10px var(--main-color);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            padding: 8px 16px;
+            background: var(--skill-bg);
+            color: var(--skill-text);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 122, 89, 0.4);
+        }
+
+        [data-theme="dark"] .skill-tag:hover {
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4), 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .theme-switcher {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .theme-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switcher">
+        <button class="theme-btn active" onclick="setTheme('light')">☀️ 日间</button>
+        <button class="theme-btn" onclick="setTheme('dark')">🌙 夜间</button>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>苏萌</h1>
+            <p class="subtitle">产品治愈师 | 7年用户体验与增长产品经验</p>
+            <div class="contact-info">
+                <span>📍 上海 · 即刻到岗</span>
+                <a href="mailto:meng.su@pm.me">📧 meng.su@pm.me</a>
+                <a href="tel:+8618800002333">📞 +86 188 0000 2333</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>专业概要</h2>
+            <p>7年互联网产品经验，深耕用户体验设计与社区生态建设。擅长情感化产品设计、创作者激励体系搭建与社区增长策略，具备将心理学机制转化为产品功能的能力。主导过多个亿级用户平台的社区功能与创作者工具，在情感化设计、用户共情与商业增长之间建立平衡。</p>
+        </section>
+
+        <section>
+            <h2>工作经历</h2>
+            <h3>字节跳动 · 生活服务 | 高级产品经理 | 2021年 – 至今</h3>
+            <ul>
+                <li>负责本地生活社区方向产品规划，通过内容推荐算法优化与互动玩法设计，实现用户日均使用时长提升60%</li>
+                <li>设计暖心反馈助手，构建用户负面情绪识别与自动安抚系统，优化工单流转机制，推动产品NPS提升12分</li>
+                <li>建立本地生活内容生态评估体系，协调算法与运营团队落地情感化内容分发策略</li>
+            </ul>
+            <h3>小红书 · 增长产品 | 产品经理 | 2018年 – 2021年</h3>
+            <ul>
+                <li>主导创作者成长体系重构，引入心理学激励机制设计治愈成长花园功能，实现活跃博主数量增加200%</li>
+                <li>推出生活碎片模板工具，降低内容创作门槛，成为社区主流发帖工具，使用率占社区发帖40%</li>
+                <li>负责创作者留存与活跃策略，通过情感化产品设计提升社区UGC内容质量与产量</li>
+            </ul>
+            <h3>网易云音乐 · 社区 | 产品助理 | 2016年 – 2018年</h3>
+            <ul>
+                <li>参与歌单推荐算法优化，基于情绪标签与场景化推荐策略调整，实现歌单点击率提升25%</li>
+                <li>发起并主导云村治愈电台项目，针对情绪化场景设计音乐推荐流，推动用户日均收听时长增加22分钟</li>
+                <li>负责音乐社区氛围建设，探索情感化内容组织与呈现方式</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>核心业务能力</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <div class="skill-category-title">用户与体验</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">用户深度共情</span>
+                        <span class="skill-tag">情感化设计</span>
+                        <span class="skill-tag">用户研究与洞察</span>
+                        <span class="skill-tag">交互原型设计</span>
+                        <span class="skill-tag">心理学应用</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-title">增长与运营</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">社区生态建设</span>
+                        <span class="skill-tag">创作者激励体系</span>
+                        <span class="skill-tag">增长实验设计</span>
+                        <span class="skill-tag">社群运营策略</span>
+                        <span class="skill-tag">内容策略</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-title">产品技术</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">数据分析</span>
+                        <span class="skill-tag">AI产品应用</span>
+                        <span class="skill-tag">推荐算法理解</span>
+                        <span class="skill-tag">敏捷开发管理</span>
+                        <span class="skill-tag">跨部门协同</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.dataset.theme = 'dark';
+            } else {
+                delete document.body.dataset.theme;
+            }
+            
+            // 更新按钮状态
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 保存偏好
+            localStorage.setItem('theme', theme);
+        }
+
+        // 初始化主题
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.dataset.theme = 'dark';
+            document.querySelectorAll('.theme-btn')[1].classList.add('active');
+            document.querySelectorAll('.theme-btn')[0].classList.remove('active');
+        }
+    </script>
+</body>
+</html>
