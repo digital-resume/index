@@ -30,6 +30,10 @@
                 <i class="fas fa-bolt"></i>
                 <span>荧光</span>
             </button>
+            <button class="theme-btn" data-theme="cyber">
+                <i class="fas fa-star"></i>
+                <span>赛博</span>
+            </button>
         `;
         
         // 插入到 body 开头
