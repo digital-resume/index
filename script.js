@@ -1,6 +1,6 @@
 /**
  * Resume-to-Web Interactive Script
- * Version: 1.0.0
+ * Version: 2.0 - Dual Theme Support
  */
 
 (function() {
@@ -8,11 +8,75 @@
 
     // DOM Ready
     document.addEventListener('DOMContentLoaded', function() {
+        initThemeSwitcher();
         initSmoothScroll();
         initAnimations();
-        initDarkModeToggle();
         initContactLinks();
     });
+
+    /**
+     * Theme Switcher - 主题切换
+     */
+    function initThemeSwitcher() {
+        // 创建切换按钮容器
+        const switcher = document.createElement('div');
+        switcher.className = 'theme-switcher';
+        switcher.innerHTML = `
+            <button class="theme-btn active" data-theme="business">
+                <i class="fas fa-briefcase"></i>
+                <span>商务</span>
+            </button>
+            <button class="theme-btn" data-theme="neon">
+                <i class="fas fa-bolt"></i>
+                <span>荧光</span>
+            </button>
+        `;
+        
+        // 插入到 body 开头
+        document.body.insertBefore(switcher, document.body.firstChild);
+        
+        // 获取保存的主题
+        const savedTheme = localStorage.getItem('resume-theme') || 'business';
+        setTheme(savedTheme);
+        
+        // 绑定点击事件
+        const buttons = switcher.querySelectorAll('.theme-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                setTheme(theme);
+                localStorage.setItem('resume-theme', theme);
+            });
+        });
+    }
+
+    /**
+     * 设置主题
+     */
+    function setTheme(theme) {
+        const root = document.documentElement;
+        
+        // 移除所有主题
+        root.removeAttribute('data-theme');
+        
+        // 设置新主题
+        if (theme === 'neon') {
+            root.setAttribute('data-theme', 'neon');
+        }
+        
+        // 更新按钮状态
+        const buttons = document.querySelectorAll('.theme-btn');
+        buttons.forEach(btn => {
+            if (btn.dataset.theme === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        // 添加过渡动画
+        document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+    }
 
     /**
      * Smooth Scroll for internal links
@@ -72,30 +136,6 @@
                 header.style.transform = 'translateY(0)';
             }, 100);
         }
-    }
-
-    /**
-     * Dark Mode Toggle (if toggle button exists)
-     */
-    function initDarkModeToggle() {
-        const toggleBtn = document.querySelector('.dark-mode-toggle');
-        if (!toggleBtn) return;
-
-        // Check for saved preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            document.documentElement.classList.add('dark');
-            toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-
-        toggleBtn.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            toggleBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        });
     }
 
     /**
@@ -159,7 +199,7 @@
             padding: 12px 24px;
             border-radius: 8px;
             font-size: 14px;
-            z-index: 1000;
+            z-index: 1001;
             animation: toastFadeIn 0.3s ease;
         `;
 
@@ -198,6 +238,24 @@
     window.downloadPDF = function() {
         showToast('请使用浏览器的"另存为PDF"功能');
         window.print();
+    };
+
+    /**
+     * 获取当前主题
+     */
+    window.getCurrentTheme = function() {
+        return localStorage.getItem('resume-theme') || 'business';
+    };
+
+    /**
+     * 切换主题
+     */
+    window.toggleTheme = function() {
+        const currentTheme = localStorage.getItem('resume-theme') || 'business';
+        const newTheme = currentTheme === 'business' ? 'neon' : 'business';
+        setTheme(newTheme);
+        localStorage.setItem('resume-theme', newTheme);
+        return newTheme;
     };
 
 })();
