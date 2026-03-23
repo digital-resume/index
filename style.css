@@ -223,6 +223,12 @@ body {
     padding: 4rem 1.5rem 2rem;
 }
 
+/* 默认隐藏 sidebar 布局元素 */
+.sidebar,
+.main-content {
+    display: none;
+}
+
 /* ===========================================
    LAYOUT: Sidebar (Cyber Theme)
    =========================================== */
@@ -236,6 +242,7 @@ body {
 }
 
 [data-theme="cyber"] .sidebar {
+    display: block;
     position: fixed;
     left: 0;
     top: 0;
@@ -248,10 +255,16 @@ body {
 }
 
 [data-theme="cyber"] .main-content {
+    display: block;
     margin-left: var(--sidebar-width);
     flex: 1;
     padding: 2rem 2.5rem;
     max-width: calc(100% - var(--sidebar-width));
+}
+
+/* Cyber 主题下隐藏 header（个人信息在 sidebar 中） */
+[data-theme="cyber"] .header {
+    display: none;
 }
 
 /* ===========================================
