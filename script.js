@@ -39,8 +39,8 @@
         // 插入到 body 开头
         document.body.insertBefore(switcher, document.body.firstChild);
         
-        // 获取保存的主题
-        const savedTheme = localStorage.getItem('resume-theme') || 'business';
+        // 获取保存的主题（默认使用 cyber 赛博风格）
+        const savedTheme = localStorage.getItem('resume-theme') || 'cyber';
         setTheme(savedTheme);
         
         // 绑定点击事件
